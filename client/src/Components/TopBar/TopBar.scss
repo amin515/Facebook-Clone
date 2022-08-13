@@ -1,0 +1,108 @@
+.tobar__container{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    background-color: #242526;
+    border-bottom: 1px solid #3a3b3c;
+    .topbar__wrapper{
+     display: flex;
+     justify-content: space-between;
+     width: 1750px;
+     align-items: center;
+     .topbar__left{
+        width: 33%;
+        .topbarLeft__content{
+           display: flex;
+           align-items: center;
+           gap: 10px;
+            a{
+                text-decoration: none;
+                font-size: 50px;
+                display: inline-block;
+                margin-top: -10px;
+             }
+            .search__content{
+                background-color: #3a3b3c;
+                border-radius: 30px;
+                padding: 2px 10px;
+                line-height: 5px;
+                button{
+                    border: none;
+                    background-color: transparent;
+                    font-size: 25px;
+                    display: inline-block;
+                    color: #b0b3b8;
+                }
+                input{
+                    border: none;
+                    height: 40px;
+                    outline: none;
+                    background-color: #3a3b3c;
+                    border-radius: 30px;
+                }
+                ::placeholder{
+                    color: #b0b3b8;
+                    font-size: 18px;
+                    padding-left: 10px;
+                  } 
+            }
+              
+        }
+     }
+     .topbar__middle{
+        width: 33%;
+        .topbarMiddle__content{
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            a{
+                display: inline-block;
+                padding: 10px 46px;
+                border-radius: 7px;
+                &:hover{
+                    background-color: #3a3b3c;
+                }
+                svg{
+                    color: #b0b3b8 !important;
+                    font-size: 100px !important;
+                    
+                }
+            }
+        }
+     }
+     .topbar__right{
+        width: 33%;
+        .topbarRight__content{
+            display: flex;
+            justify-content: end;
+            gap: 10px;
+            a{
+                font-size: 20px;
+                width: 48px;
+                height: 48px;
+                background-color: #3a3b3c;
+                display: inline-block;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                border-radius: 50%;
+                svg
+                
+                {
+                    color: #e3e4e6 !important;
+                    font-size: 20px;
+                }
+                img{
+                    width: 47px;
+                    height: 47px;
+                    object-fit: cover;
+                    border-radius: 50%;
+                }
+            }
+        }
+     }
+    }
+}
+
+
+

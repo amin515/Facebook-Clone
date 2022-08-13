@@ -1,0 +1,170 @@
+
+.RegModal-btn{
+    background-color: #42b72a !important;
+    border: none;
+    height: 50px;
+    font-size: 20px;
+    color: #fff !important;
+
+}
+.modal-header {
+    padding: 10px 10px 0 10px !important;
+    .modal__title{
+        h2{
+         font-weight: bold;
+        }
+        p{
+            font-size: 18px;
+            font-weight: 500;
+        }
+    }
+    button.btn-close {
+        margin-top: -75px !important;
+    }
+}
+
+//////////////////////////
+
+.modal__form{
+    box-sizing: border-box;
+    ::placeholder{
+        padding-left: 10px;
+    }
+    .top__halfinput{
+        display: flex;
+        justify-content: space-between;
+        .divided__input{
+            height: 50px;
+            width: 48%;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        
+    }
+    .bot__input{
+        display: flex;
+        flex-direction: column;
+        .full__input{
+            height: 50px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            position: relative;
+        }
+        
+    }
+    .sel__optbirth{
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        box-sizing: border-box;
+        #day{
+            height: 40px;
+            width: 33.33%;
+            border-radius: 5px;
+        }
+        #month{
+            height: 40px;
+            width: 33.33%;
+            border-radius: 5px;
+        }
+        #year{
+            height: 40px;
+            width: 33.33%;
+            border-radius: 5px;
+        }
+    }
+    .sel__optgender{
+        background-color: #fff;
+        box-sizing: border-box;
+        display: inline-block;
+        display: flex;
+        justify-content: space-between;
+        
+        width: auto;
+        margin: 10px 0;
+        input[type="radio"] {
+            margin-top: 13px;
+            display: inline-block;
+            margin-left: 55px;
+        }
+        
+        .male{
+            width: 32%;
+            border: 1px solid #302f2f;
+            border-radius: 5px;
+        }
+        .female{
+            width: 32%;
+            border: 1px solid #302f2f;
+            border-radius: 5px;
+        }
+        .custom{
+            width: 32%;
+            border: 1px solid #302f2f;
+            border-radius: 5px;
+        }
+        ._selected_gender{
+            box-sizing: border-box;
+            color: #1c1e21;
+            display: inline-block;
+            font-size: 15px;
+            line-height: 36px;
+            padding: 0 5px;
+            width: 60px;
+        }
+    }
+    #pronoun{
+        width: 100%;
+        height: 50px;
+        border-radius: 5px;
+    }
+    span{
+        font-size: 12px;
+        color: rgb(26, 25, 25);
+    }
+    .optional{
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        height: 50px;
+        border-radius: 5px;
+        outline: none;
+        border: none;
+        background-color: #ccc;
+    }
+    .term__condition{
+        display: flex;
+        flex-direction: column;
+        padding-top: 20px;
+        .top__condition{
+            font-size: 11px;
+         a{
+            text-decoration: none;
+         }
+        }
+        .bot__condition{
+            font-size: 11px;
+          a{
+            text-decoration: none;
+          }
+        }
+    }
+    .submit__btn{
+        text-align: center;
+        padding: 20px 0;
+        button{
+            border: none;
+            width: 70%;
+            height: 55px;
+            background-color: #42b72a;
+            color: #fff;
+            font-size: 22px;
+            border-radius: 5px;
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            -ms-border-radius: 5px;
+            -o-border-radius: 5px;
+        }
+    }
+   
+}
