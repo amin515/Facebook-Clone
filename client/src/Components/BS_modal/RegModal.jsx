@@ -1,8 +1,14 @@
 import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-import ReactTooltip from "react-tooltip";
 import './RegModal.scss';
+import swal from 'sweetalert';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import axios  from 'axios';
+
+
+
 function RegModal(props) {
   const [show, setShow] = useState(false);
 
@@ -20,19 +26,107 @@ function RegModal(props) {
     })
   }
 
+
+  // create a toast 
+  const createToast = (msg) => {
+    return toast(msg)
+  }
   // if ! click on custom hide pronoune input 
   const handleHide = () => {
     setView({
       type : false
     })
+  };
+
+
+
+ // get value from form data
+
+ const [input, setInput] = useState({
+  firstName : '',
+  lastName : '',
+  email : '',
+  phone : '',
+  password : '',
+  day : '',
+  month : '',
+  year : '',
+  gender : '',
+  pronoun : ''
+
+ });
+
+ // handle input
+ const handleInput = (e) => {
+  e.preventDefault();
+  setInput( (prev) => ({...prev, [e.target.name] : e.target.value}))
+ }
+
+
+
+
+ const {firstName , lastName, email, phone, pronoun, password, day, month, year, gender} = input;
+
+// submit form
+const handleSubmitForm =  (e) => {
+ e.preventDefault()
+ 
+ try {
+  
+  if(!firstName || !lastName || !email || !password ){
+    createToast('All fields are required')
+  }else{
+   
+    
+    axios.post('http://localhost:1150/api/user/register', {
+    firstName : firstName,
+    lastName : lastName,
+    email : email,
+    password : password,
+    day : day,
+    month : month,
+    year : year,
+    gender : gender
+  })
+ 
+  .then( res => {
+    swal("Success", "Registration successfully", "success");
+    
+    setInput({
+      firstName : '',
+      lastName : '',
+      email : '',
+      phone : '',
+      password : '',
+      day : '',
+      month : '',
+      year : '',
+      pronoun : '',
+    })
+   
+  
+  })
+  .catch( err => {
+    console.log(err)
+  })
+   
   }
+
+
+
+ } catch (error) {
+  console.log(error)
+ }
+}
+
+
 
   return (
     <>
       <Button className='RegModal-btn' onClick={handleShow}>
-        Create New Account
+       Create New Account
       </Button>
-
+      
       <Modal 
       show={show} onHide={handleClose}
       {...props}
@@ -40,6 +134,17 @@ function RegModal(props) {
       aria-labelledby="contained-modal-title-vcenter"
       centered
       >
+        <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        />
         <Modal.Header closeButton>
           <Modal.Title>
             <div className="modal__title">
@@ -50,18 +155,21 @@ function RegModal(props) {
         </Modal.Header>
         <Modal.Body>
           <div className="modal__form">
-            <form action="#">
+            <form onSubmit={ handleSubmitForm } method='POST'>
               <div className="top__halfinput">
-              <input className='divided__input' type="text" placeholder='First Name'/>
-                <input  className='divided__input'type="text" placeholder='Sur Name'/>
+              <input className='divided__input' name='firstName' type="text" placeholder='First Name' value={ firstName } onChange={ handleInput }/>
+                <input  className='divided__input'type="text" name='lastName' placeholder='Sur Name' value={ lastName } onChange={ handleInput }/>
               </div>
               <div className="bot__input">
-              <input type="text" className="full__input" placeholder='Mobile Number Or Email Address'/>
-              <input type="text" className="full__input" placeholder='New Password'/>
+                {
+                  <input name="email" type="text" className="full__input" placeholder='Mobile Number Or Email Address' value={ email } onChange={ handleInput }/> ? <input name="email" type="text" className="full__input" placeholder='Mobile Number Or Email Address' value={ email } onChange={ handleInput }/> : <input name="phone" type="number" className="full__input" placeholder='Mobile Number' value={ phone } onChange={ handleInput }/>
+                }
+              
+              <input type="password" className="full__input" name="password" placeholder='New Password' value={password} onChange={handleInput} />
               </div>
 
               <div className="sel__optbirth">
-              <select name="" id="day">
+              <select name="day" id="day" value={day} onChange={ handleInput }>
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
@@ -94,7 +202,7 @@ function RegModal(props) {
                 <option value="30">30</option>
                 <option value="31">31</option>
                </select>
-               <select name="" id="month">
+               <select name="month" id="month" value={month} onChange={ handleInput }>
                 <option value="January">January</option>
                 <option value="February">February</option>
                 <option value="March">March</option>
@@ -108,7 +216,7 @@ function RegModal(props) {
                 <option value="November">November</option>
                 <option value="December">December</option>
                </select>
-               <select name="" id="year">
+               <select name="year" id="year" value={year} onChange={ handleInput }>
                 <option value="1980">1980</option>
                 <option value="1981">1981</option>
                 <option value="1982">1982</option>
@@ -157,11 +265,11 @@ function RegModal(props) {
               <div className="sel__optgender">
                 <span className="male">
                   <label htmlFor="Male" className='_selected_gender'>Male</label>
-                  <input type="radio" value="Male" name="gender" onClick={ handleHide }/>
+                  <input type="radio" name="gender" value='male' onClick={ handleHide }/>
                 </span>
                   <span className="female">
                     <label htmlFor="Female" className='_selected_gender'>Female</label>
-                    <input type="radio" value="Female" name="gender" onClick={ handleHide }/>
+                    <input type="radio" value='female' name="gender"  onClick={handleHide}/>
                   </span>
                 <span className="custom">
                   <label htmlFor="Custom" className='_selected_gender'>Custom</label>
@@ -171,11 +279,11 @@ function RegModal(props) {
               {
                 view.type && 
                 <>
-                <select name="" id="pronoun">
-                    <option value="">Select your pronoun</option>
-                    <option value="">She:"wish her a Happy birthday!"</option>
-                    <option value="">He:"wish him a Happy birthday!"</option>
-                    <option value="">They:"wish them a Happy birthday!"</option>
+                <select name="pronoun" id="pronoun" value={ pronoun } onChange={ handleInput }>
+                    <option value="Select your pronoun">Select your pronoun</option>
+                    <option value="She:wish her happy birthday">She:"wish her a Happy birthday!"</option>
+                    <option value="He: wish him a happy birthday">He:"wish him a Happy birthday!"</option>
+                    <option value="They: wish them a happy birthday">They:"wish them a Happy birthday!"</option>
                 </select>
                 <span>Your pronoun is visible to everyone.</span>
                 <input type="text" placeholder='Gender (optional)'className='optional' data-bs-toggle="tooltip" data-bs-placement="left"/>

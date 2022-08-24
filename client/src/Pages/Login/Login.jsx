@@ -1,7 +1,83 @@
-import React from 'react';
+import React, { useContext, useState }from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import RegModal from '../../Components/BS_modal/RegModal';
-import './Login.scss'
+import axios  from 'axios';
+import './Login.scss';
+import { createToast } from '../../utility/toast';
+import cookie from 'js-cookie';
+import AuthContext from '../../Context/AuthContext';
+import LoaderContext from '../../Context/LoaderContext';
 const Login = () => {
+
+  // use auth context
+  const { dispatch } = useContext(AuthContext);
+  // loader context
+
+  const { loaderDispatch } = useContext(LoaderContext);
+
+  // set input for data get in form data
+
+  const [input, setInput] = useState({
+    auth : '',
+    password : ''
+  })
+
+
+  // navigate
+  const navigate = useNavigate();
+
+
+  // handle input
+  const handleInput = (e) => 
+  {
+    e.preventDefault()
+    setInput( (prev) => ({...prev, [e.target.name] : e.target.value}));
+  }
+
+
+
+
+  // submit form
+  const handleSubmitLogin = async (e) =>
+  {
+   e.preventDefault();
+
+   try {
+    
+  if(!input.auth || !input.password){
+    createToast('All fields are required')
+  }else{
+   
+    await axios.post('http://localhost:1150/api/user/login', { email : input.auth, password : input.password })
+
+    .then( res => {
+      createToast('Login Successfuly')
+      cookie.set('token', res.data.token);
+      cookie.set('user', JSON.stringify(res.data.user));
+
+
+      setInput( (prev) => ({
+        auth : '',
+        password : ''
+      }));
+      dispatch({type : 'LOGIN_USER_SUCCESS', payload : res.data.user });
+      navigate('/');
+      loaderDispatch({ type : 'LOADING_START'})
+    })
+    
+  }
+
+
+   } catch (error) {
+    
+
+
+    createToast('wrong email or password');
+   }
+
+
+  }
+
 
   return (
     <div>
@@ -17,19 +93,19 @@ const Login = () => {
             </div>
             <div className="login__right">
                 <div className="login__wrap">
-                    <form action="#">
-                        <input className='login__form' type="text" placeholder='EMAIL OR PHONE'/>
-                        <input className='login__form' type="text" placeholder='Password'/>
+                    <form onSubmit={ handleSubmitLogin }>
+                        <input className='login__form' type="text" name='auth' placeholder='EMAIL OR PHONE' value={ input.auth } onChange={ handleInput }/>
+                        <input className='login__form' type="password" name='password' placeholder='Password'
+                        value={ input.password } onChange={ handleInput }/>
                         <button className='login__btn' type='submit'>Log In</button>
                     </form>
                     <div className="forgot__pass">
                       <a href="#">Forgotten Password?</a>
                     </div>
                     <div className="divider">
-
                     </div>
                     <div className="create__newaccount">
-                        <RegModal />
+                    <RegModal />
                     </div>
                 </div>
                 <div className="create__page">

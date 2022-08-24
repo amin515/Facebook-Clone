@@ -183,14 +183,59 @@ import jwt from 'jsonwebtoken'
     const salt = await bcrypt.genSalt(10);
     const hash_pass = await bcrypt.hash(req.body.password, salt);
  
- 
+    // data send
      try{
      
-         const user = await User.create({ ...req.body, password : hash_pass});
-         res.status(200).json(
-             user
-         )
+         const user = await User.create({ ...req.body, password : hash_pass });
+         res.status(200).json( user )
+             
      }catch(error){
-         next(customError(404, 'User data not found'));
+         next(error);
      }
+  
+     
+ }
+
+
+export const loggedInUser = async (req, res, next) => {
+
+
+
+    try {
+
+        //get token
+
+        const bearar_token = req.headers.authorization;
+        let token = '';
+
+        if(bearar_token){
+           token = bearar_token.split(' ')[1]
+
+
+
+           // get user
+           const loggedin_user = jwt.verify(token, process.env.JWT_SECRET)
+            console.log(loggedin_user)
+
+
+            // check valid user or not
+            if(!loggedin_user){
+                res.send(customError(404, 'Invalid token'))
+            }
+
+            // if valid user
+            if(loggedin_user){
+                const user = await User.findById(loggedin_user.id)
+                res.send(user)
+            }
+        }
+
+
+        if(!bearar_token){
+            next(customError(404, 'Token not found'))
+        }
+    } catch (error) {
+        console.log(error)
+    }
+   
  }

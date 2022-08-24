@@ -1,48 +1,68 @@
 
 import mongoose from "mongoose";
 
-
-
 const userSchema = mongoose.Schema({
 
-    name : {
+    firstName : {
         type : String,
-        required : [true, 'name must be required'],
-        unique : true,
+        // required : [true, 'name must be required'],
+        // unique : true,
+        trim : true
+    },
+    lastName : {
+        type : String,
+        // required : [true, 'name must be required'],
+        // unique : true,
+        trim : true
+    },
+     day : {
+        type : String,
+        trim : true
+    },
+     month : {
+        type : String,
+        trim : true
+    },
+     year : {
+        type : String,
         trim : true
     },
     email : {
         type : String,
-        required : [true, 'email must be required'],
-        unique : true,
+        // required : [true, 'email must be required'],
+        // unique : true,
         trim : true
     },
     cell : {
         type : String,
-        required : true,
-        unique : [true, 'cell must be required'],
         trim : true
     },
     username : {
         type : String,
-        required : [true, 'username must be required'],
-        unique : true,
+        // required : [true, 'username must be required'],
+        // unique : true,
         trim : true
     },
     age : {
         type : Number,
-        required : true
     },
     gender : {
         type : String,
     },
     password : {
         type : String,
-        required : true,
+        // required : true,
         trim : true
     },
     photo : {
         type : String,
+    },
+    location : {
+        type : String,
+    },
+    isVerified : {
+        type : Boolean,
+        default : false,
     },
     isAdmin : {
         type : Boolean,
@@ -61,4 +81,4 @@ const userSchema = mongoose.Schema({
 })
 
 // export schema
-export default  mongoose.model('Users', userSchema);
+export default  mongoose.model('User', userSchema);

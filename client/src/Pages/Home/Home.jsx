@@ -8,8 +8,14 @@ import { BiWorld, BiLike, BiComment, BiCaretDown } from "react-icons/bi";
 import { FiMoreHorizontal } from "react-icons/fi";
 import './Home.scss';
 import { useState } from 'react';
+import { useContext } from 'react';
+import AuthContext from '../../Context/AuthContext';
+import add_image from '../../assets/image/add-image.jpg';
+import add_image2 from '../../assets/image/add-image2.jpg';
 const Home = () => {
 
+
+  
  // hide left site more button
  const [open, setOpen] = useState({
   type : false
@@ -467,7 +473,7 @@ const Home = () => {
           <div className="home__right__wrapper">
           <p className='sponcor'>Sponsored</p>
             <div className="right__box">
-             <img src="https://scontent.fdac116-1.fna.fbcdn.net/v/t45.1600-4/283608054_23851405409910259_1921992079734524571_n.jpg?stp=cp0_dst-jpg_p160x160_q75_spS444&_nc_cat=107&ccb=1-7&_nc_sid=67cdda&_nc_eui2=AeGEJzzGqXdWGrTDTuqF3yQ4_PhiDG_0AzH8-GIMb_QDMfkNAEBRQl06xu9cYmlFb-6Kr9zLdoDTfwFRlVMVW-Xi&_nc_ohc=zFzxVrIePO8AX_tJNwR&_nc_ht=scontent.fdac116-1.fna&oh=00_AT9gDXWAi3ezhW8cVl1L0wsQsAQ3vL3-Wceo_J6OigTfsg&oe=62FA5D2E" alt="" /> 
+             <img src={add_image2} alt="" /> 
              <div className="rigt__box__content">
               <p>বিস্তারিত জানতে ক্লিক করুন</p>
               <a href="#">👉</a>
@@ -475,7 +481,7 @@ const Home = () => {
              </div>
             </div>
             <div className="right__box__bot">
-             <img src="https://scontent.fdac116-1.fna.fbcdn.net/v/t45.1600-4/275141131_6260132684954_621471278604636677_n.jpg?stp=cp0_dst-jpg_p296x100_q75_spS444&_nc_cat=100&ccb=1-7&_nc_sid=67cdda&_nc_eui2=AeFI93qFYMuUYRNnqE1XM3IPkvWp-VO2x8KS9an5U7bHwmfwc-yZyssAOPyv5BkG1wblxg62jXAspMtdhhsRekp9&_nc_ohc=Qk8fISynq_IAX-BXF7a&_nc_ht=scontent.fdac116-1.fna&oh=00_AT_5QxyfwTmMd78PzyHrdfz3GRbDcJi4b2Ab3Pdw66h-bA&oe=62F933AF" alt="" /> 
+             <img src={add_image} alt="" /> 
              <div className="rigt__box__content">
               <p>Launch your website</p>
               <span>Bluehost.com</span>

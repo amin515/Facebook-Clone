@@ -15,9 +15,12 @@
     "react-icons": "^4.4.0",
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
+    "react-toastify": "^9.0.8",
     "react-tooltip": "^4.2.21",
+    "react-top-loading-bar": "^2.1.0",
     "sass": "^1.54.3",
     "sass-loader": "^13.0.2",
+    "sweetalert": "^2.1.2",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

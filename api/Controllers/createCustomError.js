@@ -6,6 +6,7 @@ const customError = (status, msg) => {
         err.status = status;
         err.message = msg;
         return err;
+        
 }
 
 export default customError;
