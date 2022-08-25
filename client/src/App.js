@@ -13,6 +13,9 @@ import axios from 'axios';
 import AuthContext from './Context/AuthContext';
 import LoadingBar from 'react-top-loading-bar'
 import LoaderContext from './Context/LoaderContext';
+import { createToast } from './utility/toast';
+import Verify from './Pages/Verify/Verify';
+
 
 function App() {
 
@@ -41,10 +44,13 @@ axios.get('http://localhost:1150/api/user/me', {
 })
 .then( res => {
  
-
-dispatch({ type : 'LOGIN_USER_SUCCESS', payload : res.data.user })
-
-
+  // verify account
+  if(res.data.isVerified && token){
+    dispatch({ type : 'LOGIN_USER_SUCCESS', payload : res.data })
+  }else{
+    Cookie.remove('token');
+    createToast('plz verify your account')
+  }
 })
 .catch( err => {
 
@@ -93,6 +99,7 @@ const {loaderState, loaderDispatch} = useContext( LoaderContext)
     <Routes>
       <Route path="/"element={<AuthenticateUser><Home /></AuthenticateUser>}/>
       <Route path='/login' element={<AuthRedirectUser><Login /></AuthRedirectUser>} />
+      <Route path='/user/:id/verify/:token' element={<Verify/>} />
     </Routes>
     </>
    

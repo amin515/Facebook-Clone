@@ -48,21 +48,28 @@ const Login = () => {
     createToast('All fields are required')
   }else{
    
-    await axios.post('http://localhost:1150/api/user/login', { email : input.auth, password : input.password })
+    await axios.post('http://localhost:1150/api/User/login', { email : input.auth, password : input.password })
 
     .then( res => {
-      createToast('Login Successfuly')
-      cookie.set('token', res.data.token);
-      cookie.set('user', JSON.stringify(res.data.user));
 
-
-      setInput( (prev) => ({
-        auth : '',
-        password : ''
-      }));
-      dispatch({type : 'LOGIN_USER_SUCCESS', payload : res.data.user });
-      navigate('/');
-      loaderDispatch({ type : 'LOADING_START'})
+      if(res.data.user.isVerified){
+        createToast('Login Successfuly')
+        cookie.set('token', res.data.token);
+        cookie.set('user', JSON.stringify(res.data.user));
+  
+  
+        setInput( (prev) => ({
+          auth : '',
+          password : ''
+        }));
+        
+        dispatch({type : 'LOGIN_USER_SUCCESS', payload : res.data.user });
+        navigate('/');
+        loaderDispatch({ type : 'LOADING_START'})
+      }else{
+        createToast('Please verify your account')
+      }
+      
     })
     
   }

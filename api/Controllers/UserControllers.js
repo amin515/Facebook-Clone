@@ -2,6 +2,9 @@ import User from '../Models/UserModels.js'
 import bcrypt from 'bcryptjs';
 import customError from './createCustomError.js';
 import jwt from 'jsonwebtoken'
+import { sendEmail } from '../utility/sendEmail.js';
+import { createToken } from '../utility/craeteToken.js';
+import TokenModels from '../Models/TokenModels.js';
 
 
 
@@ -187,6 +190,17 @@ import jwt from 'jsonwebtoken'
      try{
      
          const user = await User.create({ ...req.body, password : hash_pass });
+
+        // create token
+        const token = createToken({ id : user._id});
+
+        // update token
+        await TokenModels.create({userId : user._id, token : token})
+        // sent activation email
+        const verify_link = `http://localhost:3000/user/${user._id}/verify/${token}`
+
+         await sendEmail(user.email, 'verify account', verify_link);
+
          res.status(200).json( user )
              
      }catch(error){
@@ -238,4 +252,42 @@ export const loggedInUser = async (req, res, next) => {
         console.log(error)
     }
    
+ }
+
+
+ 
+/**
+ * @access public
+ * @method post 
+ * @status user/verify
+ * @route /api/user/verify_acc
+ */
+
+// verify user account
+export const verifyUserAccount = async (req, res, next) => {
+  
+    try {
+ 
+     const { id, token } = req.body;
+    
+     const  verify_user = await TokenModels.findOne({ userId : id, token : token})
+     console.log(verify_user)
+ 
+     //check url valid or not
+     if(!verify_user){
+         next(customError(404, 'Invalid verify url'))
+     }
+ 
+     if(verify_user){
+        
+         await User.findByIdAndUpdate( id, {
+             isVerified : true
+         })
+         res.status(200).json({ message : 'Account verify successful'});
+         verify_user.remove();
+     }
+ 
+    } catch (error) {
+      console.log(next(error))
+    }
  }

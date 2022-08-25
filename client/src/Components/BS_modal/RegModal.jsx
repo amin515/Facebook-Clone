@@ -78,7 +78,7 @@ const handleSubmitForm =  (e) => {
   }else{
    
     
-    axios.post('http://localhost:1150/api/user/register', {
+    axios.post('http://localhost:1150/api/User/register', {
     firstName : firstName,
     lastName : lastName,
     email : email,
@@ -104,7 +104,7 @@ const handleSubmitForm =  (e) => {
       pronoun : '',
     })
    
-  
+    createToast('Check your email and verify your account');
   })
   .catch( err => {
     console.log(err)
