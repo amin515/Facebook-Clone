@@ -107,7 +107,7 @@ const Login = () => {
                         <button className='login__btn' type='submit'>Log In</button>
                     </form>
                     <div className="forgot__pass">
-                      <a href="#">Forgotten Password?</a>
+                      <Link to="/forgot-password">Forgotten Password?</Link>
                     </div>
                     <div className="divider">
                     </div>

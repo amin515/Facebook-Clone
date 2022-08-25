@@ -15,6 +15,9 @@ import LoadingBar from 'react-top-loading-bar'
 import LoaderContext from './Context/LoaderContext';
 import { createToast } from './utility/toast';
 import Verify from './Pages/Verify/Verify';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import ForgotPassword from './ForgotPassword/ForgotPassword';
+import ResetPassword from './Pages/ResetPassword/ResetPassword';
 
 
 function App() {
@@ -22,8 +25,6 @@ function App() {
 
 // get cookies
 const token = Cookie.get('token');
-
-console.log(token);
 
 
 // usecontext
@@ -100,6 +101,8 @@ const {loaderState, loaderDispatch} = useContext( LoaderContext)
       <Route path="/"element={<AuthenticateUser><Home /></AuthenticateUser>}/>
       <Route path='/login' element={<AuthRedirectUser><Login /></AuthRedirectUser>} />
       <Route path='/user/:id/verify/:token' element={<Verify/>} />
+      <Route path='/forgot-password' element={<ForgotPassword />} />
+      <Route path='/recover-password/:token' element={<ResetPassword/>}/>
     </Routes>
     </>
    

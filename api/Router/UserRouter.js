@@ -1,5 +1,5 @@
 import express from 'express';
-import { createUser, deleteUser, getAllUser, getSingleUser, updateUser, userLogin, userRegister, loggedInUser, verifyUserAccount} from '../Controllers/UserControllers.js';
+import { createUser, deleteUser, getAllUser, getSingleUser, updateUser, userLogin, userRegister, loggedInUser, verifyUserAccount, recoverPassword, passwordReset} from '../Controllers/UserControllers.js';
 import { adminMiddleWare } from '../Middlewares/adminMiddleware.js';
 import { authMiddleWare } from '../Middlewares/authMiddleWare.js';
 import { userMiddleWare } from '../Middlewares/userMiddleware.js';
@@ -16,7 +16,10 @@ const router = express.Router();
 router.route('/me').get(loggedInUser);
 router.post('/login', userLogin);
 router.post('/register', userRegister);
+router.route('/recover_password').post(recoverPassword);
 router.route('/verify_account').post(verifyUserAccount);
+router.route('/reset-password').post(passwordReset);
+
 
 router.get('/', authMiddleWare, getAllUser);
 router.get('/:id', authMiddleWare, getSingleUser);

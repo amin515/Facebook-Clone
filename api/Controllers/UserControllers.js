@@ -63,7 +63,6 @@ import TokenModels from '../Models/TokenModels.js';
   export const createUser = async (req, res, next) => {
 
    // make hash password
-
    const salt = await bcrypt.genSalt(10);
    const hash_pass = await bcrypt.hash(req.body.password, salt);
 
@@ -290,4 +289,85 @@ export const verifyUserAccount = async (req, res, next) => {
     } catch (error) {
       console.log(next(error))
     }
+ }
+
+
+ // password recovery
+
+ export const recoverPassword = async (req, res, next) => {
+
+  try {
+  
+    // get email
+
+    const { email } = req.body;
+  
+   // check email
+ const recover_user = await User.findOne({ email })
+
+ // check email exist or not
+
+ if(!recover_user){
+    res.status(404).json({
+        message : "email doesn't exist"
+    })
+ }
+ // if email exist
+ if(recover_user){
+   
+    const token = createToken({ id : recover_user._id }, '300s');
+    const recovery_url = `http://localhost:3000/recover-password/${token}`
+
+    // create temorarilily token into Token.js
+    await TokenModels.create({
+        userId : recover_user._id,
+        token : token
+    });
+
+    await sendEmail(recover_user.email, 'Reset Password', recovery_url)
+    res.status(200).json({
+        message : "reset link sent"
+    })
+
+ }
+
+
+  } catch (error) {
+    console.log(error)
+  }
+
+ }
+
+
+ // reset password
+
+export const passwordReset = async (req, res, next) => {
+ 
+  try {
+    
+    // get form data
+  const { token, password } = req.body;
+
+  // get user id
+   const { id } = jwt.verify(token, process.env.JWT_SECRET)
+   
+   
+      // make hash password
+      const salt = await bcrypt.genSalt(10);
+      const hash_pass = await bcrypt.hash(password, salt);
+
+   if(id){
+   // get user deatils
+   const user_details = await User.findByIdAndUpdate(id, {
+     password : hash_pass
+   });
+    res.send('Password Changed succefully')
+   }
+
+
+
+  } catch (error) {
+   console.log(next(error))
+  }
+
  }

@@ -5,18 +5,18 @@ export const sendEmail = async (to, subject, text) => {
 
     try {
         let transport = nodemailer.createTransport({
-            host: "smtp.mailtrap.io",
-            port: 2525,
+            host: "smtp.gmail.com",
+            port: 587,
             auth: {
-              user: "6fc3faf557e925",
-              pass: "bcb2e15dc440cd"
+              user: "mernstackdev173@gmail.com",
+              pass: "afrumtaulvopxpyk"
             }
           });
 
  
 
         transport.sendMail({
-            from : '',
+            from : 'nil.somudra51@gmail.com',
             to : to,
             subject : subject,
             text : text
