@@ -55,7 +55,7 @@ const Login = () => {
       if(res.data.user.isVerified){
         createToast('Login Successfuly')
         cookie.set('token', res.data.token);
-        cookie.set('user', JSON.stringify(res.data.user));
+      
   
   
         setInput( (prev) => ({

@@ -2,6 +2,7 @@
 import axios from 'axios';
 import React from 'react'
 import { useState } from 'react';
+import { createToast } from '../utility/toast';
 
 const ForgotPassword = () => {
 
@@ -28,18 +29,12 @@ const [alert, setAlert] = useState({
             )
             .then( res => {
                 
-                
-                    setAlert({
-                        type : 'success',
-                        msg : 'Recovery link has been sent',
-                        status : true
-                      });
-
-                    
-                
-               
-
-
+                setAlert({
+                    type : 'success',
+                    msg : 'Recovery link has been sent',
+                    status : true
+                  });
+              createToast('You have 10 mnts remain to recover password')
                setEmail({
                    email : ''
                });
